@@ -1,10 +1,15 @@
 package org.restapi.minprojetrest.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @Setter
@@ -19,16 +24,21 @@ public class Creneau {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "start_time")
-    private LocalTime startTime;
+    private String heureDebut;
 
-    @Column(name = "end_time")
-    private LocalTime endTime;
 
-    @Column(name = "status")
-    private String status; // Disponible, Réservé, etc.
-
+    private String heureFin;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "centre_id", referencedColumnName = "id")
     private Centre centre;
+
+    @Override
+    public String toString() {
+        return "Creneau{" +
+                "id=" + id +
+                ", heureDebut='" + heureDebut + '\'' +
+                ", heureFin='" + heureFin + '\'' +
+                '}';
+    }
 }

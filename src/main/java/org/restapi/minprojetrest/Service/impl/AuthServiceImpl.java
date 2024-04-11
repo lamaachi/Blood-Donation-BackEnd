@@ -29,14 +29,17 @@ public class AuthServiceImpl {
     }
 
     public AuthenticationResponse register(AppUser request) {
-
+        System.out.println(request);
         // check if user already exist. if exist than authenticate the user
         if(repository.findByUsername(request.getUsername()).isPresent()) {
             return new AuthenticationResponse(null, "User already exist");
         }
+
         AppUser user = new AppUser();
         user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
+        user.setLastname(request.getLastname());
+        user.setTelephone(request.getTelephone());
+        user.setFirstname(request.getFirstname());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(request.getRole());
         user = repository.save(user);

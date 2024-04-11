@@ -46,7 +46,7 @@ public class SecurityConfig  {
         return  httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        req->req.requestMatchers("/api/v1/login/**","/api/v1/register/**")
+                        req->req.requestMatchers("/api/v1/login/**","/api/v1/register/**","/api/v1/hello/**","/api/v1/users/**")
                                 .permitAll()
 //                                .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                 .anyRequest()
@@ -61,7 +61,7 @@ public class SecurityConfig  {
                                 )
                                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .logout(l->l
-                        .logoutUrl("/logout")
+                        .logoutUrl("/api/v1/logout")
                         .addLogoutHandler(logoutHandler)
                         .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()
                         ))
