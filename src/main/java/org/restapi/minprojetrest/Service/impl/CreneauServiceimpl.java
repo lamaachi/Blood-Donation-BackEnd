@@ -21,12 +21,17 @@ public class CreneauServiceimpl {
 
     public Creneau createCreneau(Long centreId, Creneau creneau) {
         Optional<Centre> optionalCentre = centerRepository.findById(centreId);
+        System.out.println("+===================optionalCentre.get().getCreneaux()==================");
+        System.out.println(optionalCentre.get().getCreneaux());
+
         if (optionalCentre.isPresent()) {
             Centre centre = optionalCentre.get();
             creneau.setCentre(centre);
-            centre.getCreneaux().add(creneau);
+//            centre.getCreneaux().add(creneau);
             centerRepository.save(centre);
             creneauRepository.save(creneau);
+            System.out.println("+===================optionalCentre.get().getCreneaux()==================");
+            System.out.println(optionalCentre.get().getCreneaux());
             return creneau;
         } else {
             throw new RuntimeException("Centre not found with id: " + centreId);

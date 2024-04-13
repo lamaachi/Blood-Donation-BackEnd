@@ -21,13 +21,13 @@ public class RendezVous {
     @Column(name = "date")
     private LocalDateTime date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Centre centre;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Creneau creneau;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private AppUser appUser;
 
 }

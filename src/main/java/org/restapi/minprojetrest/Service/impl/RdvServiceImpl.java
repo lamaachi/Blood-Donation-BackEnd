@@ -1,5 +1,6 @@
 package org.restapi.minprojetrest.Service.impl;
 
+import jakarta.transaction.Transactional;
 import org.restapi.minprojetrest.Model.*;
 import org.restapi.minprojetrest.Model.DTO.RendezVousDTO;
 import org.restapi.minprojetrest.Repository.AppUserRepository;
@@ -28,8 +29,9 @@ public class RdvServiceImpl implements RdvService {
     }
 
     @Override
+//    @Transactional
     public RendezVous addRdv(RdvRequest rdvRequest) {
-
+        System.out.println(rdvRequest);
         // Retrieve AppUser, Creneau, and Centre from their respective repositories
         AppUser appUser = appUserRepository.findById(rdvRequest.getUserId())
                 .orElseThrow(() -> new RuntimeException("AppUser not found"));
@@ -39,7 +41,6 @@ public class RdvServiceImpl implements RdvService {
 
         Centre centre = centerRepository.findById(rdvRequest.getCentreId())
                 .orElseThrow(() -> new RuntimeException("Centre not found"));
-
 
         RendezVous rendezVous = RendezVous.builder()
                 .centre(centre)

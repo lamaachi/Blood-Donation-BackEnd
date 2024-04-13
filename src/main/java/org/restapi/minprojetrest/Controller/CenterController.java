@@ -48,7 +48,8 @@ public class CenterController {
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Centre> createCentre(@RequestBody CentreRequest centreRequest) {
         Centre newCentre = centerService.createCentre(centreRequest.getCentre());
-
+        System.out.println("+=====================centreRequest.getCreneaux()================");
+        System.out.println(centreRequest.getCreneaux());
         List<Creneau> creneaux = centreRequest.getCreneaux();
         if (newCentre.getCreneaux() == null) {
             newCentre.setCreneaux(new ArrayList<>());
@@ -58,7 +59,8 @@ public class CenterController {
             creneau.setCentre(newCentre);
             creneauServiceimpl.createCreneau(newCentre.getId(), creneau);
         }
-
+        System.out.println("+=====================newCentre.getCreneaux()================");
+        System.out.println(newCentre.getCreneaux());
         return ResponseEntity.ok(newCentre);
     }
 

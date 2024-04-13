@@ -31,7 +31,7 @@ public class Centre {
     @Column(name = "opening_hours")
     private String openingHours;
     @JsonIgnore
-    @OneToMany(mappedBy = "centre", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "centre", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<RendezVous> rdvs;
 
     @OneToMany(mappedBy = "centre", cascade = CascadeType.ALL, orphanRemoval = true)

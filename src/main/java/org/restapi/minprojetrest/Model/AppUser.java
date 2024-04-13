@@ -44,7 +44,7 @@ public class AppUser implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Token> tokens ;
 
-    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<RendezVous> rdvs;
 
     @Override
