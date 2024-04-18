@@ -6,6 +6,7 @@ import org.restapi.minprojetrest.Model.RdvRequest;
 import org.restapi.minprojetrest.Model.RendezVous;
 import org.restapi.minprojetrest.Service.impl.RdvServiceImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class RdvController {
     }
     // Get all Rdvs
     @GetMapping(path = "/rdv")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<List<RendezVousDTO>> getAllRdvs() {
         List<RendezVousDTO> rdvs = rdvService.getAll();
         return ResponseEntity.ok(rdvs);

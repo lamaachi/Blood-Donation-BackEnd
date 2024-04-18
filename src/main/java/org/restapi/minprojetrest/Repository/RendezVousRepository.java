@@ -12,8 +12,6 @@ import java.util.List;
 
 public interface RendezVousRepository extends JpaRepository<RendezVous, Long> {
     List<RendezVous> findByAppUser(AppUser appUser);
+    List<RendezVous> findAllByStatus(Boolean status);
 
-    //    @Modifying
-    //    @Query("DELETE FROM RendezVous r WHERE r.id = :id")
-    //    void deleteByIdCustom(@Param("id") Long id);
 }

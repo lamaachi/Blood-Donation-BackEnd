@@ -45,11 +45,11 @@ public class AuthenticationController {
         return ResponseEntity.ok(userDTO);
     }
 
-
     @DeleteMapping("/user/delete/{userId}")
     @Transactional
     public ResponseEntity<String> removeUser(@PathVariable Long userId) {
         userService.removeuser(userId);
         return ResponseEntity.ok("User deleted successfully");
     }
+
 }

@@ -30,4 +30,6 @@ public class RendezVous {
     @ManyToOne(fetch = FetchType.EAGER)
     private AppUser appUser;
 
+    private Boolean status;
+
 }

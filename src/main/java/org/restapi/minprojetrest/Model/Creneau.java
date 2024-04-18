@@ -27,11 +27,18 @@ public class Creneau {
     private String heureDebut;
 
 
+    private int nb_rdv;
+
+
+
     private String heureFin;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "centre_id", referencedColumnName = "id")
     private Centre centre;
+
+
 
     @Override
     public String toString() {
@@ -42,3 +49,4 @@ public class Creneau {
                 '}';
     }
 }
+
