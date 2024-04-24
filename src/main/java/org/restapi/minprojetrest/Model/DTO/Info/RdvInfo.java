@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.restapi.minprojetrest.Model.RendezVous;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,8 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class RdvInfo {
+
     private Long id;
-    private LocalDateTime date;
+    private LocalDate date;
     private CreneauInfo creneau;
     private AppUserInfo appUser;
 
@@ -27,3 +29,5 @@ public class RdvInfo {
                 .build();
     }
 }
+
+

@@ -1,16 +1,16 @@
 package org.restapi.minprojetrest.Controller;
 
 import jakarta.transaction.Transactional;
+import org.restapi.minprojetrest.Model.AddRdvResponse;
 import org.restapi.minprojetrest.Model.DTO.RendezVousDTO;
 import org.restapi.minprojetrest.Model.RdvRequest;
-import org.restapi.minprojetrest.Model.RendezVous;
 import org.restapi.minprojetrest.Service.impl.RdvServiceImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/api/v1/")
@@ -45,8 +45,25 @@ public class RdvController {
 
     // Create a new Rdv
     @PostMapping(path = "/rdv")
-    public ResponseEntity<RendezVous> createRdv(@RequestBody RdvRequest rdvRequest) {
-        RendezVous rdv = rdvService.addRdv(rdvRequest);
-        return ResponseEntity.ok(rdv);
+    public ResponseEntity<AddRdvResponse> createRdv(@RequestBody RdvRequest rdvRequest) {
+        AddRdvResponse response = rdvService.addRdv(rdvRequest);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
+
+    @PutMapping("/rdv/{id}")
+    public void disableRdv(@PathVariable Long id){
+        rdvService.desableRdv(id);
+    }
+
+    @PutMapping("/rdv/validate/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<String> validateRdv(@PathVariable Long id){
+        rdvService.validateRdv(id);
+        return ResponseEntity.ok("Rdv  Validated...");
+    }
+
 }

@@ -8,6 +8,7 @@ import org.restapi.minprojetrest.Model.RendezVous;
 import org.restapi.minprojetrest.Model.DTO.Info.CentreInfo;
 import org.restapi.minprojetrest.Model.DTO.Info.CreneauInfo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
@@ -16,9 +17,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RendezVousDTO {
     private Long id;
-    private LocalDateTime date;
+    private LocalDate date;
     private CentreInfo centre;
     private CreneauInfo creneau;
+    private Boolean is_valid;
+    private Boolean status;
     public static RendezVousDTO RdvtoDto(RendezVous rendezVous){
         return RendezVousDTO.builder()
                 .id(rendezVous.getId())
@@ -33,7 +36,8 @@ public class RendezVousDTO {
                         rendezVous.getCreneau().getHeureDebut(),
                         rendezVous.getCreneau().getHeureFin()
                 ))
-
+                .is_valid(rendezVous.is_valid())
+                .status(rendezVous.getStatus())
                 .build();
     }
 }

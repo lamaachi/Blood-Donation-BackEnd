@@ -18,7 +18,8 @@ public class CustomLogoutHandler implements LogoutHandler {
     }
 
     @Override
-    public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+    public void logout(HttpServletRequest request, HttpServletResponse response,
+                       Authentication authentication) {
         String authHeader = request.getHeader("Authorization");
 
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {

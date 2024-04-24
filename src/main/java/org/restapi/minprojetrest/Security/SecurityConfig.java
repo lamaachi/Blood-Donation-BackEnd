@@ -54,7 +54,8 @@ public class SecurityConfig  {
                 ).userDetailsService(userDetailsServiceImp)
                 .sessionManagement(session->session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(
                         e->e.accessDeniedHandler(
                                         (request, response, accessDeniedException)->response.setStatus(403)

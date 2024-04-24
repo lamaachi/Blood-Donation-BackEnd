@@ -3,6 +3,10 @@ package org.restapi.minprojetrest.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,15 +25,24 @@ public class AppUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "First name is required")
+    @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
     @Column(name = "firstname")
     private String firstname;
 
+    @NotBlank(message = "First name is required")
+    @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
     @Column(name = "lastname")
     private String lastname;
 
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
     @Column(name = "username",unique = true)
     private String username;
 
+
+    @NotBlank(message = "Telephone is required")
+    @Pattern(regexp = "\\d{10}", message = "Telephone must be a 10-digit number")
     @Column(name = "telephone")
     private String telephone;
 

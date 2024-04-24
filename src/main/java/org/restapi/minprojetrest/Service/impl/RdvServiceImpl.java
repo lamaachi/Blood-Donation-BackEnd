@@ -1,6 +1,6 @@
 package org.restapi.minprojetrest.Service.impl;
 
-import jakarta.transaction.Transactional;
+import org.restapi.minprojetrest.Model.AddRdvResponse;
 import org.restapi.minprojetrest.Model.*;
 import org.restapi.minprojetrest.Model.DTO.RendezVousDTO;
 import org.restapi.minprojetrest.Repository.AppUserRepository;
@@ -30,9 +30,7 @@ public class RdvServiceImpl implements RdvService {
 
     @Override
 //    @Transactional
-    public RendezVous addRdv(RdvRequest rdvRequest) {
-        System.out.println(rdvRequest);
-        // Retrieve AppUser, Creneau, and Centre from their respective repositories
+    public AddRdvResponse addRdv(RdvRequest rdvRequest) {
         AppUser appUser = appUserRepository.findById(rdvRequest.getUserId())
                 .orElseThrow(() -> new RuntimeException("AppUser not found"));
 
@@ -42,15 +40,24 @@ public class RdvServiceImpl implements RdvService {
         Centre centre = centerRepository.findById(rdvRequest.getCentreId())
                 .orElseThrow(() -> new RuntimeException("Centre not found"));
 
+        int existingAppointments = rendezVousRepository.countByDateAndCreneauAndCentre(rdvRequest.getDate(), creneau, centre);
+
+        if (existingAppointments >= centre.getMaxCapacity()) {
+            return new AddRdvResponse(false, "Maximum number of appointments exceeded for the given time slot and date.");
+        }
+
         RendezVous rendezVous = RendezVous.builder()
                 .centre(centre)
                 .creneau(creneau)
                 .date(rdvRequest.getDate())
                 .appUser(appUser)
+                .status(true)
+                .is_valid(false)
                 .build();
         appUser.getRdvs().add(rendezVous);
         centre.getRdvs().add(rendezVous);
-        return rendezVousRepository.save(rendezVous);
+        rendezVousRepository.save(rendezVous);
+        return  new AddRdvResponse(true, "Rdv added successfully.");
     }
 
     @Override
@@ -108,5 +115,26 @@ public class RdvServiceImpl implements RdvService {
     public Optional<RendezVous> getById(Long id) {
         return rendezVousRepository.findById(id);
     }
+
+    @Override
+    public void desableRdv(Long id) {
+        Optional<RendezVous> rdv = rendezVousRepository.findById(id);
+        if(rdv.isPresent()){
+            RendezVous updateRdv = rdv.get();
+            updateRdv.setStatus(false);
+            rendezVousRepository.save(updateRdv);
+        }
+    }
+
+    @Override
+    public void validateRdv(Long id) {
+        Optional<RendezVous> rdv = rendezVousRepository.findById(id);
+        if(rdv.isPresent()){
+            RendezVous updateRdv = rdv.get();
+            updateRdv.set_valid(true);
+            rendezVousRepository.save(updateRdv);
+        }
+    }
+
 
 }

@@ -1,11 +1,9 @@
 package org.restapi.minprojetrest.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -19,7 +17,7 @@ public class RendezVous {
     private Long id;
 
     @Column(name = "date")
-    private LocalDateTime date;
+    private LocalDate date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Centre centre;
@@ -29,6 +27,8 @@ public class RendezVous {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private AppUser appUser;
+
+    private boolean is_valid;
 
     private Boolean status;
 
